@@ -1,4 +1,5 @@
 const express = require('express');
+const pageRoute = require('./routes/pageRoute')
 
 const app = express();
 
@@ -11,17 +12,7 @@ app.use(express.static("public")) //statik dosyalarımızı belirttik
 
 
 //ROUTES(YÖNLENDİRMELER)
-app.get('/', (req, res) => {
-    res.status(200).render('index', {
-        page_name: "index"
-    })
-})
-
-app.get('/about', (req, res) => {
-    res.render('about', {
-        page_name: "about"
-    })
-})
+app.use('/', pageRoute) //index url isteği geldiğinde pageRoute kullanmasını söylüyoruz
 
 
 const port = 3000;
