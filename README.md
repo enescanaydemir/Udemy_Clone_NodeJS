@@ -1,4 +1,4 @@
-<h1 align="center">Project of the System Analysis and Design</h1>
+<h1 align="center">Project of the System Analysis and Design Course</h1>
 
 
 <h3> Udemy Clone Project </h3>
