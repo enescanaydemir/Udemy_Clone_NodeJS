@@ -6,6 +6,6 @@ const router = express.Router()
 //yeni bir kurs oluşturmak için yapmamız gereken post request göndermek olacak çünkü form dolduracağız
 router.route('/').post(courseController.createCourse)
 router.route('/').get(courseController.getAllCourses) //kursları listeleyeceğimiz için .get ile çağırdık
-
+router.route('/:slug').get(courseController.getCourse)
 
 module.exports = router
