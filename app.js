@@ -7,12 +7,7 @@ const courseRoute = require('./routes/courseRoute')
 const app = express();
 
 //Connect DB
-mongoose.connect('mongodb://localhost/udemyclone-db', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
-    useCreateIndex: true
-}).then(() => {
+mongoose.connect('mongodb://localhost/udemyclone-db').then(() => {
     console.log('DB Connected Successfly')
 })
 
@@ -23,11 +18,13 @@ app.set("view engine", "ejs") //template engine'imizin ejs olduğunu belirttik
 
 //Middlewares
 app.use(express.static("public")) //statik dosyalarımızı belirttik
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 
 
 //ROUTES(YÖNLENDİRMELER)
 app.use('/', pageRoute) //index url isteği geldiğinde pageRoute kullanmasını söylüyoruz
-app.use('/courses', pageRoute)
+app.use('/courses', courseRoute)
 
 
 const port = 3000;
