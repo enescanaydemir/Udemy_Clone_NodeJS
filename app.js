@@ -2,6 +2,7 @@ const express = require('express');
 const pageRoute = require('./routes/pageRoute')
 const mongoose = require('mongoose')
 const courseRoute = require('./routes/courseRoute')
+const categoryRoute = require('./routes/categoryRoute')
 
 
 const app = express();
@@ -25,6 +26,7 @@ app.use(express.urlencoded({ extended: true }))
 //ROUTES(YÖNLENDİRMELER)
 app.use('/', pageRoute) //index url isteği geldiğinde pageRoute kullanmasını söylüyoruz
 app.use('/courses', courseRoute)
+app.use('/categories', categoryRoute)
 
 
 const port = 3000;
