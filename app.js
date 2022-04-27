@@ -25,11 +25,11 @@ app.use(express.urlencoded({ extended: true }))
 
 //ROUTES(YÖNLENDİRMELER)
 app.use('/', pageRoute) //index url isteği geldiğinde pageRoute kullanmasını söylüyoruz
-app.use('/courses', courseRoute)
-app.use('/categories', categoryRoute)
+app.use('/courses', courseRoute);
+app.use('/categories', categoryRoute);
 
 
 const port = 3000;
 app.listen(port, () => {
     console.log(`App started on port ${port}`)
-})
+});
