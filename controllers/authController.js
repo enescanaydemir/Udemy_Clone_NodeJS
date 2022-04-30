@@ -26,7 +26,8 @@ exports.loginUser = (req, res) => {
             if (user) { //bu koşul satırı içerisinde "kullanıcı var ise kullanıcının şifresi ile girilen şifrenin eşit olup olmadığını" kontrol ettik. Ayrıca bunun için bcrypt'den faydalandık
                 bcrypt.compare(password, user.password, (err, same) => { //compare() = bcrypt'nin karşılaştırma fonksiyonu. İçerisinde parametre olarak ilk parametre girilen password, ikinci parametre olarakta datada bulunan user'ın password kısmını karşılaştırdık
                     if (same) {
-                        res.status(200).send('YOU ARE LOGED IN') //Bu kısımda kullanıcı giriş yaptıktan sonra kullanıcının profiline yönlendirilicek ancak şuan o ekran olmadığı için yani USER SESSION olmadığı için şimdilik mesaj gönderiyoruz
+                        req.session.userID = user._id //hangi user giriş yapıyorsa onu yakalamak için bu satırı yazıyoruz. userID ile ayrıştırarak buluyoruz.
+                        res.status(200).redirect('/') //kullanıcı girişi yapıldıktan sonra ana sayfaya yönlendirilecek
                     }
                 })
             }

@@ -1,6 +1,7 @@
 // Sayfa gösterimi dosyası
 
 exports.getIndexPage = (req, res) => {
+    console.log(req.session.userID) //her index sayfasına geldiğinde hangi kullanıcı session da ise console'a yazdıracak 
     res.status(200).render('index', {
         page_name: "index" //sayfa başlığı
     })
