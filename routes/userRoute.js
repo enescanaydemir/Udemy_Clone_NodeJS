@@ -7,5 +7,6 @@ const router = express.Router();
 router.route('/signup').post(authController.createUser) // http://localhost:3000/user/signup
 router.route('/login').post(authController.logInUser)
 router.route('/logout').get(authController.logOutUser)
+router.route('/dashboard').get(authController.getDashboardPage) //http://localhost:3000/user/dashboard
 
 module.exports = router;

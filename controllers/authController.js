@@ -28,7 +28,7 @@ exports.logInUser = (req, res) => {
                 bcrypt.compare(password, user.password, (err, same) => { //compare() = bcrypt'nin karşılaştırma fonksiyonu. İçerisinde parametre olarak ilk parametre girilen password, ikinci parametre olarakta datada bulunan user'ın password kısmını karşılaştırdık
                     if (same) {
                         req.session.userID = user._id //hangi user giriş yapıyorsa onu yakalamak için bu satırı yazıyoruz. userID ile ayrıştırarak buluyoruz.
-                        res.status(200).redirect('/') //kullanıcı girişi yapıldıktan sonra ana sayfaya yönlendirilecek
+                        res.status(200).redirect('/users/dashboard') //kullanıcı girişi yapıldıktan sonra ana sayfaya yönlendirilecek
                     }
                 })
             }
@@ -45,5 +45,13 @@ exports.logInUser = (req, res) => {
 exports.logOutUser = (req, res) => {
     req.session.destroy(() => {
         res.redirect('/')
+    })
+}
+
+exports.getDashboardPage = async(req, res) => {
+    const user = await User.findOne({ _id: req.session.userID })
+    res.status(200).render('dashboard', {
+        page_name: 'dashboard',
+        user
     })
 }
