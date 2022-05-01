@@ -2,6 +2,8 @@ const express = require('express');
 const pageRoute = require('./routes/pageRoute')
 const mongoose = require('mongoose')
 const session = require('express-session')
+const MongoStore = require('connect-mongo')
+
 const courseRoute = require('./routes/courseRoute')
 const categoryRoute = require('./routes/categoryRoute')
 const userRoute = require('./routes/userRoute')
@@ -31,7 +33,8 @@ app.use(express.urlencoded({ extended: true }))
 app.use(session({ // express-session'ın döküman sayfasında yazan kullanım şekli;
     secret: 'my_keyboard_cat',
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: true,
+    store: MongoStore.create({ mongoUrl: 'mongodb://localhost/udemyclone-db' })
 }))
 
 //ROUTES(YÖNLENDİRMELER)

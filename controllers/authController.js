@@ -1,7 +1,8 @@
-// Bu sayfada, Yeni bir user oluşturma işlemini fonksiyonel olarak ayarlayacağız. Bu fonksiyonu çalıştırmak için 'userRoute.js' adında bir route oluşturduk
 const User = require('../models/User')
 const bcrypt = require('bcrypt')
 
+
+//Yeni bir user oluşturma işlemini fonksiyonel olarak ayarlayacağız. Bu fonksiyonu çalıştırmak için 'userRoute.js' adında bir route oluşturduk
 exports.createUser = async(req, res) => {
     try {
         const user = await User.create(req.body); //req.body = form doldurma alanı. body'den bu bilgileri alarak user oluşturacak.
@@ -18,7 +19,7 @@ exports.createUser = async(req, res) => {
     }
 }
 
-exports.loginUser = (req, res) => {
+exports.logInUser = (req, res) => {
     try {
         const { email, password } = req.body //email ve pass'ı body den yakaladık
 
@@ -38,4 +39,11 @@ exports.loginUser = (req, res) => {
             error,
         })
     }
+}
+
+
+exports.logOutUser = (req, res) => {
+    req.session.destroy(() => {
+        res.redirect('/')
+    })
 }
