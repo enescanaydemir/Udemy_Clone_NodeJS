@@ -1,6 +1,6 @@
-const User = require('../models/User')
 const bcrypt = require('bcrypt')
-
+const User = require('../models/User')
+const Category = require('../models/Category')
 
 //Yeni bir user oluşturma işlemini fonksiyonel olarak ayarlayacağız. Bu fonksiyonu çalıştırmak için 'userRoute.js' adında bir route oluşturduk
 exports.createUser = async(req, res) => {
@@ -47,8 +47,10 @@ exports.logOutUser = (req, res) => {
 
 exports.getDashboardPage = async(req, res) => {
     const user = await User.findOne({ _id: req.session.userID })
+    const categories = await Category.find(); //tüm kategorileri çağırıp categories isimli değişkene atadık. Daha sonra bu categories yani bütün kategorileri dashboard'a gönderdik. Daha sonra dashboard içerisinde ilgili template içerisinde categories'i yakaladık.
     res.status(200).render('dashboard', {
         page_name: 'dashboard',
-        user
+        user,
+        categories
     })
 }

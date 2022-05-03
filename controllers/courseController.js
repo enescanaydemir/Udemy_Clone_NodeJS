@@ -7,10 +7,8 @@ exports.createCourse = async(req, res) => {
     try { //hata yakalamak için try-catch kullandık
         const course = await Course.create(req.body)
 
-        res.status(201).json({ // Bu kısumda postman üzerinden yaptığımız data testinde bize geri dönüş sağlaması için bir kontrol yazdık. 
-            status: 'success',
-            course
-        })
+        res.status(201).redirect('/courses')
+
     } catch (error) { //yanlış ise data testinde burası çıkacak.
         res.status(400).json({
             status: 'fail',
@@ -21,7 +19,6 @@ exports.createCourse = async(req, res) => {
 
 //Tüm kursları sıralama
 exports.getAllCourses = async(req, res) => {
-
     try {
 
         const categorySlug = req.query.categories; //query den gelen parametreyi(categories) yakalıyoruz. 
@@ -35,9 +32,7 @@ exports.getAllCourses = async(req, res) => {
         }
 
 
-
-        const courses = await Course.find(filter);
-
+        const courses = await Course.find(filter).sort('-createdAt')
         const categories = await Category.find();
 
         res.status(200).render('courses', {
