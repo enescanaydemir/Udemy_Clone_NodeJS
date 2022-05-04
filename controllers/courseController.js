@@ -57,7 +57,7 @@ exports.getAllCourses = async(req, res) => {
 exports.getCourse = async(req, res) => {
 
     try {
-        const course = await Course.findOne({ slug: req.params.slug }) //findOne = id yerine slug kullandığımız için findById yerine findOne yazdık.
+        const course = await Course.findOne({ slug: req.params.slug }).populate('user')
 
         res.status(200).render('course', {
             course,
