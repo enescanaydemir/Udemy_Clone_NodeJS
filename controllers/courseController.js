@@ -4,8 +4,13 @@ const Category = require('../models/Category')
 //new course create function
 exports.createCourse = async(req, res) => {
 
-    try { //hata yakalamak için try-catch kullandık
-        const course = await Course.create(req.body)
+    try {
+        const course = await Course.create({
+            name: req.body.name,
+            description: req.body.name,
+            category: req.body.category,
+            user: req.session.userID //Hangi kullanıcının giriş yaptığını session içerisindeki userID'den alıp ayrımını yapacağız. Yani bu kısmını, kurs oluşturulduğunda hangi user oluşturuldu onu bulmak için yapıyoruz.
+        })
 
         res.status(201).redirect('/courses')
 
