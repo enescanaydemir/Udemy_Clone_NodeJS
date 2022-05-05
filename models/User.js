@@ -20,7 +20,11 @@ const UserSchema = new Schema({
         type: String,
         enum: ["student", "teacher", "admin"], //enum: alabileceği değerler.
         default: "student"
-    }
+    },
+    courses: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Course'
+    }]
 })
 
 UserSchema.pre('save', function(next) {

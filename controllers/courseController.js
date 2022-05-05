@@ -1,5 +1,6 @@
 const Course = require('../models/Course')
 const Category = require('../models/Category')
+const User = require('../models/User')
 
 //new course create function
 exports.createCourse = async(req, res) => {
@@ -7,13 +8,12 @@ exports.createCourse = async(req, res) => {
     try {
         const course = await Course.create({
             name: req.body.name,
-            description: req.body.name,
+            description: req.body.description,
             category: req.body.category,
             user: req.session.userID //Hangi kullanıcının giriş yaptığını session içerisindeki userID'den alıp ayrımını yapacağız. Yani bu kısmını, kurs oluşturulduğunda hangi user oluşturuldu onu bulmak için yapıyoruz.
         })
 
         res.status(201).redirect('/courses')
-
     } catch (error) { //yanlış ise data testinde burası çıkacak.
         res.status(400).json({
             status: 'fail',
@@ -63,6 +63,24 @@ exports.getCourse = async(req, res) => {
             course,
             page_name: 'courses',
         })
+    } catch (error) {
+        res.status(400).json({
+            status: 'fail',
+            error,
+        })
+    }
+}
+
+
+exports.enrollCourse = async(req, res) => {
+
+    try {
+
+        const user = await User.findById(req.session.userID) //ilgili user bulunuyor
+        await user.courses.push({ _id: req.body.course_id }) //ilgili user ın kurslar bölümüne yeni kursu ekliyor
+        await user.save() //kullanıcıyı kaydediyor
+
+        res.status(200).redirect('/users/dashboard')
     } catch (error) {
         res.status(400).json({
             status: 'fail',

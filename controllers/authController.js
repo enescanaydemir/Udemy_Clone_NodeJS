@@ -47,7 +47,7 @@ exports.logOutUser = (req, res) => {
 }
 
 exports.getDashboardPage = async(req, res) => {
-    const user = await User.findOne({ _id: req.session.userID })
+    const user = await User.findOne({ _id: req.session.userID }).populate('courses')
     const categories = await Category.find(); //tüm kategorileri çağırıp categories isimli değişkene atadık. Daha sonra bu categories yani bütün kategorileri dashboard'a gönderdik. Daha sonra dashboard içerisinde ilgili template içerisinde categories'i yakaladık.
     const courses = await Course.find({ use: req.session.userID })
     res.status(200).render('dashboard', {
